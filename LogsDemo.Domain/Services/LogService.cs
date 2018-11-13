@@ -52,7 +52,7 @@ namespace LogsDemo.Domain.Services
         public async Task<IList<Log>> GetUserLogsAsync(string userId, DateTime? start, DateTime? end, LogSeverity? severity, LogType? type)
         {
 
-            Expression<Func<Log, bool>> filter = (log) => true;
+            Expression<Func<Log, bool>> filter = (log) => log.UserId == userId;
 
             if (start.HasValue)
                 filter = filter.And(log => log.DateCreated >= start);
