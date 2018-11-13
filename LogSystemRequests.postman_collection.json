@@ -1,0 +1,341 @@
+{
+	"info": {
+		"_postman_id": "eee52980-ab87-42a4-b4a0-1d7c29ebe72a",
+		"name": "LogSystemRequests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create New User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Name\" : \"Kamal\",\n\t\"ThrottlingLimit\" : \"2\",\n\t\"ThrottlingPeriod\" : \"1m\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9031/api/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9031",
+					"path": [
+						"api",
+						"user"
+					]
+				},
+				"description": "Name : Name of user\nThrottling Limit :  access count \nThrottling Period : period to access in"
+			},
+			"response": []
+		},
+		{
+			"name": "Submit log [ Content-Type = Json ]",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-ClientId",
+						"value": "5beaa22d4447da6fb481b33c",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Message\" : \"Log4\" ,\n  \"Severity\" : 1,\n  \"Type\" : 2,\n   \"Params\" : null\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9031/api/users/5beaa22d4447da6fb481b33c/logs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9031",
+					"path": [
+						"api",
+						"users",
+						"5beaa22d4447da6fb481b33c",
+						"logs"
+					]
+				},
+				"description": "Create log without params for user \"3709d18a260c4eff841c3cd59a2d1742\""
+			},
+			"response": []
+		},
+		{
+			"name": "Submit log [ Content-Type = XML ]",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/xml"
+					},
+					{
+						"key": "Accept",
+						"value": "application/xml",
+						"type": "text"
+					},
+					{
+						"key": "X-ClientId",
+						"value": "5beaa22d4447da6fb481b33c",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<LogCreateDto xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.datacontract.org/2004/07/LogsDemo.API.Models\">\n    <Message>Log1</Message>\n    <Params xmlns:d2p1=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\">\n        <d2p1:string>1</d2p1:string>\n        <d2p1:string>2</d2p1:string>\n    </Params>\n    <Serverity>Low</Serverity>\n    <Type>Debug</Type>\n    <UserId>3709d18a260c4eff841c3cd59a2d1742</UserId>\n</LogCreateDto>"
+				},
+				"url": {
+					"raw": "http://localhost:9031/api/users/5beaa22d4447da6fb481b33c/logs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9031",
+					"path": [
+						"api",
+						"users",
+						"5beaa22d4447da6fb481b33c",
+						"logs"
+					]
+				},
+				"description": "Create log without params for user \"3709d18a260c4eff841c3cd59a2d1742\""
+			},
+			"response": []
+		},
+		{
+			"name": "Get all user logs in Json format",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-ClientId",
+						"value": "5beaa22d4447da6fb481b33c",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9031/api/users/5beaa22d4447da6fb481b33c/logs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9031",
+					"path": [
+						"api",
+						"users",
+						"5beaa22d4447da6fb481b33c",
+						"logs"
+					]
+				},
+				"description": "get all user logs "
+			},
+			"response": []
+		},
+		{
+			"name": "Get all user logs in Xml Format",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/xml"
+					},
+					{
+						"key": "X-ClientId",
+						"value": "5beaa22d4447da6fb481b33c",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9031/api/users/5beaa22d4447da6fb481b33c/logs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9031",
+					"path": [
+						"api",
+						"users",
+						"5beaa22d4447da6fb481b33c",
+						"logs"
+					]
+				},
+				"description": "get all user logs "
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Logs By Date Window",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-ClientId",
+						"value": "5beaa22d4447da6fb481b33c",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9031/api/users/5beaa22d4447da6fb481b33c/logs?from=2018-11-08 16:49:58.675&to=2018-11-08 16:49:58.675&=",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9031",
+					"path": [
+						"api",
+						"users",
+						"5beaa22d4447da6fb481b33c",
+						"logs"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "2018-11-08 16:49:58.675"
+						},
+						{
+							"key": "to",
+							"value": "2018-11-08 16:49:58.675"
+						},
+						{
+							"key": "",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Logs By Date Window and Serverity",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-ClientId",
+						"value": "5be817d0db8b0c1234a7e94d",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9031/api/users/5be817d0db8b0c1234a7e94d/logs?from=2018-11-08 16:49:58.675&to=2018-11-08 16:49:58.675&severity=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9031",
+					"path": [
+						"api",
+						"users",
+						"5be817d0db8b0c1234a7e94d",
+						"logs"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "2018-11-08 16:49:58.675"
+						},
+						{
+							"key": "to",
+							"value": "2018-11-08 16:49:58.675"
+						},
+						{
+							"key": "severity",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Logs By Date Window and Serverity and Type",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-ClientId",
+						"value": "5be817d0db8b0c1234a7e94d",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9031/api/users/5be817d0db8b0c1234a7e94d/logs?from=2018-11-08 16:49:58.675&to=2018-11-08 16:51:59.694&severity=1&type=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9031",
+					"path": [
+						"api",
+						"users",
+						"5be817d0db8b0c1234a7e94d",
+						"logs"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "2018-11-08 16:49:58.675"
+						},
+						{
+							"key": "to",
+							"value": "2018-11-08 16:51:59.694"
+						},
+						{
+							"key": "severity",
+							"value": "1"
+						},
+						{
+							"key": "type",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
