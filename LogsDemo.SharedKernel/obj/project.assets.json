@@ -674,11 +674,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\melbasuony\\Desktop\\LogsDemo\\LogsDemo.SharedKernel\\LogsDemo.SharedKernel.csproj",
+      "projectUniqueName": "C:\\Users\\melbasuony\\Desktop\\LogsDemo\\LogsDemo\\LogsDemo.SharedKernel\\LogsDemo.SharedKernel.csproj",
       "projectName": "LogsDemo.SharedKernel",
-      "projectPath": "C:\\Users\\melbasuony\\Desktop\\LogsDemo\\LogsDemo.SharedKernel\\LogsDemo.SharedKernel.csproj",
+      "projectPath": "C:\\Users\\melbasuony\\Desktop\\LogsDemo\\LogsDemo\\LogsDemo.SharedKernel\\LogsDemo.SharedKernel.csproj",
       "packagesPath": "C:\\Users\\melbasuony\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\melbasuony\\Desktop\\LogsDemo\\LogsDemo.SharedKernel\\obj\\",
+      "outputPath": "C:\\Users\\melbasuony\\Desktop\\LogsDemo\\LogsDemo\\LogsDemo.SharedKernel\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",
