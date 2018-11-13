@@ -1,8 +1,7 @@
 ﻿using LogsDemo.Domain.Entities;
 using LogsDemo.Domain.Interfaces;
+using LogsDemo.SharedKernel.Exceptions;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LogsDemo.Domain.Services
@@ -17,13 +16,13 @@ namespace LogsDemo.Domain.Services
         }
 
 
-        public async Task<User> CreateUserAsync(User user)
+        public async Task<User> CreateUserAsync(User user) 
         {
             if (user == null)
-                throw new ApplicationException("User Not Found");
+                throw new CustomException("User Not Found");
 
             if (await userRepository?.IsExistsAsync(user.ID))
-                throw new ApplicationException("User Already Exists");
+                throw new CustomException("User Already Exists");
 
             try
             {
@@ -32,9 +31,9 @@ namespace LogsDemo.Domain.Services
 
                 return createdUser;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new ApplicationException("Failed To Create User ", e.InnerException);
+                throw new CustomException("Failed To Create User ");
             }
         }
 

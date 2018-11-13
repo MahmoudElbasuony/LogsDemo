@@ -4,11 +4,10 @@ using LogsDemo.API.Helpers;
 using LogsDemo.API.Models;
 using LogsDemo.Domain.Entities;
 using LogsDemo.Domain.Interfaces;
+using LogsDemo.SharedKernel.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -91,7 +90,7 @@ namespace LogsDemo.API.Controllers
 
                 return CreatedAtRoute("GetUser", new { Id = user.ID }, user);
             }
-            catch (ApplicationException e)
+            catch (CustomException e)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }

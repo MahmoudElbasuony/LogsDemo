@@ -1,9 +1,9 @@
 ﻿using LogsDemo.Domain.Interfaces;
 using LogsDemo.Infrastructure.Helpers;
 using LogsDemo.Infrastructure.Repositories;
+using LogsDemo.SharedKernel.Exceptions;
 using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace LogsDemo.Infrastructure.Contexts
@@ -60,7 +60,7 @@ namespace LogsDemo.Infrastructure.Contexts
             }
             catch
             {
-                throw new Exception("Error To Connect to Database Server");
+                throw new CustomException("Error To Connect to Database Server");
             }
 
         }
@@ -100,7 +100,7 @@ namespace LogsDemo.Infrastructure.Contexts
         public static MongoUnitOfWork Create(string DbName)
         {
             if (string.IsNullOrWhiteSpace(DbName))
-                throw new ApplicationException("Database Name required");
+                throw new CustomException("Database Name required");
 
             return new MongoUnitOfWork(DbName);
         }

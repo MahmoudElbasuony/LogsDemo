@@ -1,13 +1,12 @@
-﻿using AspNetCoreRateLimit;
-using AutoMapper;
+﻿using AutoMapper;
 using LogsDemo.API.Models;
 using LogsDemo.Domain.Entities;
 using LogsDemo.Domain.Enums;
 using LogsDemo.Domain.Interfaces;
+using LogsDemo.SharedKernel.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -125,7 +124,7 @@ namespace LogsDemo.API.Controllers
                 return CreatedAtRoute("GetLog", new { logId = log.ID,  userId }, log);
 
             }
-            catch (ApplicationException e)
+            catch (CustomException e)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }

@@ -1,10 +1,9 @@
 ﻿using LogsDemo.Domain.Entities;
 using LogsDemo.Domain.Interfaces;
+using LogsDemo.SharedKernel.Exceptions;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LogsDemo.Infrastructure.Repositories
@@ -39,14 +38,14 @@ namespace LogsDemo.Infrastructure.Repositories
                 var result = await Collection.UpdateOneAsync(e => e.ID == user.ID, update_query);
 
                 if (result.ModifiedCount == 0)
-                    throw new ApplicationException("Can't Update Log ! Please Try Again Later .");
+                    throw new CustomException("Can't Update Log ! Please Try Again Later .");
 
                 else return user;
 
             }
             catch
             {
-                throw new ApplicationException("Update Operation Failed");
+                throw new CustomException("Update Operation Failed");
             }
         }
 

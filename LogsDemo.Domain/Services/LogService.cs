@@ -4,10 +4,10 @@ using LogsDemo.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using LogsDemo.SharedKernel.Linq;
+using LogsDemo.SharedKernel.Exceptions;
 
 namespace LogsDemo.Domain.Services
 {
@@ -27,13 +27,13 @@ namespace LogsDemo.Domain.Services
         {
 
             if (log == null)
-                throw new ApplicationException("Log Can't Be Null .");
+                throw new CustomException("Log Can't Be Null .");
 
             if (string.IsNullOrWhiteSpace(log.UserId))
-                throw new ApplicationException("Log's User Id Required .");
+                throw new CustomException("Log's User Id Required .");
 
             if (!await userRepository?.IsExistsAsync(log.UserId))
-                throw new ApplicationException($"User with ID : {log.UserId} Not Exist .");
+                throw new CustomException($"User with ID : {log.UserId} Not Exist .");
 
             try
             {
@@ -41,9 +41,9 @@ namespace LogsDemo.Domain.Services
 
                 return createdLog;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new ApplicationException("Failed To Create Log ", e.InnerException);
+                throw new CustomException("Failed To Create Log .");
             }
         }
 
