@@ -25,9 +25,10 @@ namespace LogsDemo.Infrastructure.DI
 
 
                 // servcies 
+
                 config.For<ILogSystemUnitOfWork>().LifecycleIs(new ThreadLocalStorageLifecycle()).Use(MongoUnitOfWork.Create(settings.DbName));
-                config.For<ILogService>().LifecycleIs(new ThreadLocalStorageLifecycle()).Use<LogService>();
-                config.For<IUserService>().LifecycleIs(new ThreadLocalStorageLifecycle()).Use<UserService>();
+                config.For<ILogService>().Use<LogService>();
+                config.For<IUserService>().Use<UserService>();
 
                 // external services 
                 config.Populate(services);

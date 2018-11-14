@@ -2,6 +2,7 @@
 using AspNetCoreRateLimit;
 using LogsDemo.API.App_Start;
 using LogsDemo.API.Helpers;
+using LogsDemo.API.Middlewares;
 using LogsDemo.Domain.Interfaces;
 using LogsDemo.Infrastructure.DI;
 using LogsDemo.Infrastructure.Helpers;

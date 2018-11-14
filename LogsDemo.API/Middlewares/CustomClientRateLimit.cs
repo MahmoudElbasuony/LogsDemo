@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LogsDemo.API.Helpers
+namespace LogsDemo.API.Middlewares
 {
     public class CustomClientRateLimit : ClientRateLimitMiddleware
     {

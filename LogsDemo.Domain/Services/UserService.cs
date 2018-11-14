@@ -8,6 +8,7 @@ namespace LogsDemo.Domain.Services
 {
     public class UserService : BusinessService<User>, IUserService
     {
+        
         private readonly IUserRepository userRepository;
 
         public UserService(ILogSystemUnitOfWork logSystemUnitOfWork) : base(logSystemUnitOfWork)

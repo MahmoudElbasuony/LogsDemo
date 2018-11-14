@@ -10,6 +10,7 @@ namespace LogsDemo.Infrastructure.Contexts
 {
     public class MongoUnitOfWork : ILogSystemUnitOfWork
     {
+
         public ILogRepository LogRepository { get; private set; }
 
         public IUserRepository UserRepository { get; private set; }
