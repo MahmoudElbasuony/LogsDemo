@@ -17,7 +17,7 @@ namespace LogsDemo.API
 {
     public class Startup
     {
-        private readonly Settings settings;
+        public static Settings settings;
 
         public Startup(IConfiguration configuration)
         {
@@ -26,7 +26,8 @@ namespace LogsDemo.API
             // Application settings 
             settings = new Settings
             {
-                DbName = Configuration["DataBase:Name"] ?? Constants.DefaultDatabaseName
+                DbName = Configuration["DataBase:Name"] ?? Constants.DefaultDatabaseName,
+                 ClientIdHeader = Configuration["ClientRateLimiting:ClientIdHeader"] ?? Constants.DefaultClientIdHeaderName
             };
 
         }

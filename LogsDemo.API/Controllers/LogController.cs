@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LogsDemo.API.Filters;
 using LogsDemo.API.Models;
 using LogsDemo.Domain.Entities;
 using LogsDemo.Domain.Enums;
@@ -31,6 +32,7 @@ namespace LogsDemo.API.Controllers
         /// </summary>
         /// <param name="logId">Log Id</param>
         /// <param name="userId">User id that belongs this log</param>
+        [ClientRateGuard]
         [HttpGet("{logId}", Name = "GetLog")]
         public async Task<IActionResult> GetUserLog(string userId, string logId)
         {
@@ -66,6 +68,7 @@ namespace LogsDemo.API.Controllers
         /// <param name="to"> To date in format [yyyy-mm-dd hh:mm:ss.tt] e.x "2018-11-07 20:13:22.428 [Optional]"</param>
         /// <param name="severity">Severity of log {Low = 0, Medium = 1, High = 2, Etc } [Optional]  </param>
         /// <param name="type">Type of log { Debug = 0, Trace = 1, Info = 2, Etc } [Optional]  </param>
+        [ClientRateGuard]
         [HttpGet]
         public async Task<IActionResult> GetUserLogs(string userId, DateTime? from, DateTime? to, LogSeverity? severity, LogType? type)
         {
@@ -97,6 +100,7 @@ namespace LogsDemo.API.Controllers
         /// <param name="createDto"> Data transfer object represent log </param>
         /// <param name="userId">User id </param>
         [HttpPost]
+        [ClientRateGuard]
         public async Task<IActionResult> CreateLog(string userId, [FromBody] LogCreateDto createDto)
         {
             if (createDto == null)

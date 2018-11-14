@@ -8,5 +8,6 @@ namespace LogsDemo.Infrastructure.Helpers
     {
         public string DbName { get; set; }
         public string ConnectionString { get; set; }
+        public string ClientIdHeader { get; set; }
     }
 }

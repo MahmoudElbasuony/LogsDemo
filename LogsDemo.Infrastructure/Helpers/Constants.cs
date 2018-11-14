@@ -9,6 +9,6 @@ namespace LogsDemo.Infrastructure.Helpers
         public const string DefaultDatabaseName = "DefaultDB";
         public const long DefaultThrottlingLimit = 2;
         public const string DefaultThrottlingPeriod = "5m";
-
+        public const string DefaultClientIdHeaderName = "X-ClientId";
     }
 }
