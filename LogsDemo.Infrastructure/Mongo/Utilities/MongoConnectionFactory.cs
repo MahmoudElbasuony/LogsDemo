@@ -13,17 +13,19 @@ namespace LogsDemo.Infrastructure.Mongo.Utilities
 
         public static IMongoClient GetConnection(string ConnectionString = null)
         {
-            lock (padlock)
-            {
-                if (ConnectionString != null)
+            if (mongoClient == null)
+                lock (padlock)
                 {
-                    mongoClient = mongoClient ?? new MongoClient(ConnectionString);
+                    if (ConnectionString != null)
+                    {
+                        mongoClient = mongoClient ?? new MongoClient(ConnectionString);
+                    }
+                    else
+                    {
+                        mongoClient = mongoClient ?? new MongoClient();
+                    }
                 }
-                else
-                {
-                    mongoClient = mongoClient ?? new MongoClient();
-                }
-            }
+
             return mongoClient;
 
         }
