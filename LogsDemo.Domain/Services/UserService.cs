@@ -32,7 +32,7 @@ namespace LogsDemo.Domain.Services
 
                 var userToCreate = Mapper.Map<User<string>>(user);
 
-                var createdUser = await userRepository?.CreateAsync(userToCreate);
+                var createdUser = await userRepository.CreateAsync(userToCreate);
 
                 return Mapper.Map<UserEntity>(createdUser);
 
@@ -45,14 +45,14 @@ namespace LogsDemo.Domain.Services
 
         public async Task<UserEntity> GetUserAsync(string userId)
         {
-            var user = Mapper.Map<UserEntity>(await userRepository?.GetByIDAsync(userId));
+            var user = Mapper.Map<UserEntity>(await userRepository.GetByIDAsync(userId));
 
             return user;
         }
 
         public async Task<bool> UserExistsAsync(string userId)
         {
-            return await userRepository?.IsExistsAsync(userId);
+            return await userRepository.IsExistsAsync(userId);
         }
     }
 }

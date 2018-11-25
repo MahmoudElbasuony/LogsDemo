@@ -37,12 +37,12 @@ namespace LogsDemo.Domain.Services
            
             try
             {
-                if (!await userRepository?.IsExistsAsync(log.UserId))
+                if (!await userRepository.IsExistsAsync(log.UserId))
                     throw new CustomException($"User with ID : {log.UserId} Not Exist .");
 
                 var newLog = Mapper.Map<Log<string>>(log);
 
-                var createdLog = await logRepository?.CreateAsync(newLog);
+                var createdLog = await logRepository.CreateAsync(newLog);
 
                 return Mapper.Map<LogEntity>(createdLog);
 
@@ -55,7 +55,7 @@ namespace LogsDemo.Domain.Services
 
         public async Task<LogEntity> GetUserLogAsync(string userId, string logId)
         {
-            var userLog =  (await logRepository?.GetOnAsync(log => log.ID == logId && log.UserId == userId)).SingleOrDefault();
+            var userLog =  (await logRepository.GetOnAsync(log => log.ID == logId && log.UserId == userId)).SingleOrDefault();
 
             return Mapper.Map<LogEntity>(userLog);
         }
@@ -82,7 +82,7 @@ namespace LogsDemo.Domain.Services
             if (type.HasValue)
                 filter = filter.And(log => log.Type == type);
 
-            return Mapper.Map<IList<LogEntity>>(await logRepository?.GetOnAsync(filter));
+            return Mapper.Map<IList<LogEntity>>(await logRepository.GetOnAsync(filter));
         }
     }
 }
