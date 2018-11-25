@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace LogsDemo.Domain.Interfaces
 {
-    public interface IUserService : IBusinessService<User>
+    public interface IUserService  
     {
-        Task<User> CreateUserAsync(User user);
-        Task<User> GetUserAsync(string userId);
+        Task<UserEntity> CreateUserAsync(UserEntity user);
+        Task<UserEntity> GetUserAsync(string userId);
         Task<bool> UserExistsAsync(string userId);
     }
 }

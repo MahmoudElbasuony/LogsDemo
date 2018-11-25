@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace LogsDemo.Domain.Entities
+namespace LogsDemo.Models
 {
     public abstract class BaseEntity<TID>
     {

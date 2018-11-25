@@ -1,11 +1,11 @@
-﻿using LogsDemo.Domain.Entities;
+﻿using LogsDemo.Models;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.IdGenerators;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LogsDemo.Infrastructure.Helpers
+namespace LogsDemo.Infrastructure.Mongo.Utilities
 {
     internal static class MongoModelMapper
     {
@@ -15,8 +15,8 @@ namespace LogsDemo.Infrastructure.Helpers
             {
                 BsonClassMap.RegisterClassMap<BaseEntity<string>>((map) =>
                 {
-                    map.AddKnownType(typeof(User));
-                    map.AddKnownType(typeof(Log));
+                    map.AddKnownType(typeof(User<string>));
+                    map.AddKnownType(typeof(Log<string>));
                     map.AutoMap();
                     map.MapIdMember(en => en.ID).SetIdGenerator(new StringObjectIdGenerator());
                 });

@@ -1,5 +1,4 @@
 ﻿using LogsDemo.Domain.Entities;
-using LogsDemo.Domain.Enums;
 using LogsDemo.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,22 +7,25 @@ using System.Threading.Tasks;
 using System.Linq;
 using LogsDemo.SharedKernel.Linq;
 using LogsDemo.SharedKernel.Exceptions;
+using LogsDemo.Models;
+using LogsDemo.Models.Enums;
+using AutoMapper;
 
 namespace LogsDemo.Domain.Services
 {
-    public class LogService : BusinessService<Log>, ILogService
+    public class LogService : ILogService
     {
-        private readonly ILogRepository logRepository;
+        private readonly ILogRepository<string> logRepository;
 
-        private readonly IUserRepository userRepository;
+        private readonly IUserRepository<string> userRepository;
 
-        public LogService(ILogSystemUnitOfWork logSystemUnitOfWork) : base(logSystemUnitOfWork)
+        public LogService(IUserRepository<string> userRepository, ILogRepository<string> logRepository)
         {
-            this.userRepository = base.logSystemUnitOfWork?.UserRepository;
-            this.logRepository = base.logSystemUnitOfWork?.LogRepository;
+            this.userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            this.logRepository = logRepository ?? throw new ArgumentNullException(nameof(logRepository));
         }
 
-        public async Task<Log> CreateLogAsync(Log log)
+        public async Task<LogEntity> CreateLogAsync(LogEntity log)
         {
 
             if (log == null)
@@ -32,14 +34,18 @@ namespace LogsDemo.Domain.Services
             if (string.IsNullOrWhiteSpace(log.UserId))
                 throw new CustomException("Log's User Id Required .");
 
-            if (!await userRepository?.IsExistsAsync(log.UserId))
-                throw new CustomException($"User with ID : {log.UserId} Not Exist .");
-
+           
             try
             {
-                var createdLog = await logRepository?.CreateAsync(log);
+                if (!await userRepository?.IsExistsAsync(log.UserId))
+                    throw new CustomException($"User with ID : {log.UserId} Not Exist .");
 
-                return createdLog;
+                var newLog = Mapper.Map<Log<string>>(log);
+
+                var createdLog = await logRepository?.CreateAsync(newLog);
+
+                return Mapper.Map<LogEntity>(createdLog);
+
             }
             catch (Exception)
             {
@@ -47,12 +53,17 @@ namespace LogsDemo.Domain.Services
             }
         }
 
-        public async Task<Log> GetUserLogAsync(string userId, string logId) => (await logRepository?.GetOnAsync(log => log.ID == logId && log.UserId == userId)).SingleOrDefault();
+        public async Task<LogEntity> GetUserLogAsync(string userId, string logId)
+        {
+            var userLog =  (await logRepository?.GetOnAsync(log => log.ID == logId && log.UserId == userId)).SingleOrDefault();
 
-        public async Task<IList<Log>> GetUserLogsAsync(string userId, DateTime? start, DateTime? end, LogSeverity? severity, LogType? type)
+            return Mapper.Map<LogEntity>(userLog);
+        }
+
+        public async Task<IList<LogEntity>> GetUserLogsAsync(string userId, DateTime? start, DateTime? end, LogSeverity? severity, LogType? type)
         {
 
-            Expression<Func<Log, bool>> filter = (log) => log.UserId == userId;
+            Expression<Func<Log<string>, bool>> filter = (log) => log.UserId == userId;
 
             if (start.HasValue)
                 filter = filter.And(log => log.DateCreated >= start);
@@ -71,7 +82,7 @@ namespace LogsDemo.Domain.Services
             if (type.HasValue)
                 filter = filter.And(log => log.Type == type);
 
-            return await logRepository?.GetOnAsync(filter);
+            return Mapper.Map<IList<LogEntity>>(await logRepository?.GetOnAsync(filter));
         }
     }
 }

@@ -1,36 +1,41 @@
-﻿using LogsDemo.Domain.Entities;
+﻿using AutoMapper;
+using LogsDemo.Domain.Entities;
 using LogsDemo.Domain.Interfaces;
+using LogsDemo.Models;
 using LogsDemo.SharedKernel.Exceptions;
 using System;
 using System.Threading.Tasks;
 
 namespace LogsDemo.Domain.Services
 {
-    public class UserService : BusinessService<User>, IUserService
+    public class UserService : IUserService
     {
-        
-        private readonly IUserRepository userRepository;
 
-        public UserService(ILogSystemUnitOfWork logSystemUnitOfWork) : base(logSystemUnitOfWork)
+        private readonly IUserRepository<string> userRepository;
+
+        public UserService(IUserRepository<string> userRepository)
         {
-            this.userRepository = this.logSystemUnitOfWork?.UserRepository;
+            this.userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
 
-        public async Task<User> CreateUserAsync(User user) 
+        public async Task<UserEntity> CreateUserAsync(UserEntity user)
         {
             if (user == null)
                 throw new CustomException("User Not Found");
 
-            if (await userRepository?.IsExistsAsync(user.ID))
-                throw new CustomException("User Already Exists");
-
             try
             {
 
-                var createdUser = await userRepository?.CreateAsync(user);
+                if (await userRepository.IsExistsAsync(user.ID))
+                    throw new CustomException("User Already Exists");
 
-                return createdUser;
+                var userToCreate = Mapper.Map<User<string>>(user);
+
+                var createdUser = await userRepository?.CreateAsync(userToCreate);
+
+                return Mapper.Map<UserEntity>(createdUser);
+
             }
             catch (Exception)
             {
@@ -38,8 +43,16 @@ namespace LogsDemo.Domain.Services
             }
         }
 
-        public async Task<User> GetUserAsync(string userId) => await userRepository?.GetByIDAsync(userId);
+        public async Task<UserEntity> GetUserAsync(string userId)
+        {
+            var user = Mapper.Map<UserEntity>(await userRepository?.GetByIDAsync(userId));
 
-        public async Task<bool> UserExistsAsync(string userId) => await userRepository?.IsExistsAsync(userId);
+            return user;
+        }
+
+        public async Task<bool> UserExistsAsync(string userId)
+        {
+            return await userRepository?.IsExistsAsync(userId);
+        }
     }
 }

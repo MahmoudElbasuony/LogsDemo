@@ -1,5 +1,6 @@
 ﻿using LogsDemo.API.Models;
 using LogsDemo.Domain.Entities;
+using LogsDemo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,21 @@ namespace LogsDemo.API.App_Start
     {
         public static void Setup()
         {
+            
             AutoMapper.Mapper.Initialize(config =>
             {
-                config.CreateMap<LogCreateDto, Log>();
-                config.CreateMap<Log, LogDto>();
 
-                config.CreateMap<UserCreateDto, User>();
-                config.CreateMap<User, UserDto>();
+                // Api <=> Domain
+                config.CreateMap<LogCreateDto, LogEntity>();
+                config.CreateMap<LogDto, LogEntity>();
+
+                config.CreateMap<UserCreateDto, UserEntity>();
+                config.CreateMap<UserDto, UserEntity>();
+
+
+                // Domain  <=> Infrastructure
+                config.CreateMap<LogEntity, Log<string>>();
+                config.CreateMap<UserEntity, User<string>>();
             });
         }
     }

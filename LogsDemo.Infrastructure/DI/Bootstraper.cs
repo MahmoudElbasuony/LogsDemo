@@ -1,7 +1,8 @@
 ﻿using LogsDemo.Domain.Interfaces;
 using LogsDemo.Domain.Services;
-using LogsDemo.Infrastructure.Contexts;
 using LogsDemo.Infrastructure.Helpers;
+using LogsDemo.Infrastructure.Mongo.Repositories;
+using LogsDemo.Infrastructure.Mongo.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using StructureMap;
 using StructureMap.Pipeline;
@@ -26,7 +27,10 @@ namespace LogsDemo.Infrastructure.DI
 
                 // servcies 
 
-                config.For<ILogSystemUnitOfWork>().LifecycleIs(new ThreadLocalStorageLifecycle()).Use(MongoUnitOfWork.Create(settings.DbName));
+                var mongoClient = MongoConnectionFactory.GetConnection(settings.ConnectionString);
+                config.For<IUserRepository<string>>().LifecycleIs(new ThreadLocalStorageLifecycle()).Use(MongoUserRepository.Create(mongoClient, settings.DbName));
+                config.For<ILogRepository<string>>().LifecycleIs(new ThreadLocalStorageLifecycle()).Use(MongoLogRepository.Create(mongoClient, settings.DbName));
+
                 config.For<ILogService>().Use<LogService>();
                 config.For<IUserService>().Use<UserService>();
 

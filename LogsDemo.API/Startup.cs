@@ -45,11 +45,11 @@ namespace LogsDemo.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, ILogSystemUnitOfWork logSystemUnitOfWork, IOptions<ClientRateLimitPolicies> clientRateLimitPolicies)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IUserRepository<string> userRepository, IOptions<ClientRateLimitPolicies> clientRateLimitPolicies)
         {
 
             // will load user rate limit in memory cache 
-            RateLimitHelper.LoadUsersRateLimits(logSystemUnitOfWork, clientRateLimitPolicies);
+            RateLimitHelper.LoadUsersRateLimits(userRepository, clientRateLimitPolicies);
 
             //app.UseClientRateLimiting();
             app.UseMiddleware<CustomClientRateLimit>();

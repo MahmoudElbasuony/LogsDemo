@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogsDemo.Domain", "LogsDemo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogsDemo.Infrastructure", "LogsDemo.Infrastructure\LogsDemo.Infrastructure.csproj", "{2E05AF91-6E36-4B47-BC21-6EA84AE3BF87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogsDemo.SharedKernel", "LogsDemo.SharedKernel\LogsDemo.SharedKernel.csproj", "{33ED561C-02C7-46CA-8DC4-83728658FE5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogsDemo.SharedKernel", "LogsDemo.SharedKernel\LogsDemo.SharedKernel.csproj", "{33ED561C-02C7-46CA-8DC4-83728658FE5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogsDemo.Domain.Tests", "LogsDemo.Domain.Tests\LogsDemo.Domain.Tests.csproj", "{BF0C1E0C-E2B1-4357-83FA-38C022146650}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogsDemo.Domain.Tests", "LogsDemo.Domain.Tests\LogsDemo.Domain.Tests.csproj", "{BF0C1E0C-E2B1-4357-83FA-38C022146650}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogsDemo.Models", "LogsDemo.Models\LogsDemo.Models.csproj", "{A67DFD5C-B4B7-40F8-AABD-9C5EF07BAFC6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{BF0C1E0C-E2B1-4357-83FA-38C022146650}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF0C1E0C-E2B1-4357-83FA-38C022146650}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF0C1E0C-E2B1-4357-83FA-38C022146650}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A67DFD5C-B4B7-40F8-AABD-9C5EF07BAFC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A67DFD5C-B4B7-40F8-AABD-9C5EF07BAFC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A67DFD5C-B4B7-40F8-AABD-9C5EF07BAFC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A67DFD5C-B4B7-40F8-AABD-9C5EF07BAFC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,12 +1,12 @@
-﻿using LogsDemo.Domain.Enums;
+﻿using LogsDemo.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace LogsDemo.Domain.Entities
+namespace LogsDemo.Models
 {
-    public class Log : BaseEntity<string>
+    public class Log<TKey> : BaseEntity<TKey>
     {
         public Log()
         {

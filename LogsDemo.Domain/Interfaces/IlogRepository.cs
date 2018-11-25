@@ -1,4 +1,4 @@
-﻿using LogsDemo.Domain.Entities;
+﻿using LogsDemo.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace LogsDemo.Domain.Interfaces
 {
-    public interface ILogRepository :  IRepository<Log>
+    public interface ILogRepository<TKey> :  IRepository<Log<TKey>>
     {
-        Task<Log> DeleteAsync(string userID);
-        Task<Log> UpdateAsync(Log log);
-        Task<Log> GetByIDAsync(string logId);
-        Task<bool> IsExistsAsync(string logID);
+        Task<Log<TKey>> DeleteAsync(TKey userID);
+        Task<Log<TKey>> UpdateAsync(Log<TKey> log);
+        Task<Log<TKey>> GetByIDAsync(TKey logId);
+        Task<bool> IsExistsAsync(TKey logID);
     }
 }

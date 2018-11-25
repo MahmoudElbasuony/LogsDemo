@@ -14,38 +14,37 @@ namespace LogsDemo.API.Helpers
         /// <summary>
         /// Load users rate limits from Database
         /// </summary>
-        /// <param name="logSystemUnitOfWork">UOW used to retrieve  users </param>
         /// <param name="clientRatePolicies">Current Rate Limit Policies To Add New Rule Into It</param>
-        public async static void LoadUsersRateLimits(ILogSystemUnitOfWork logSystemUnitOfWork, IOptions<ClientRateLimitPolicies> clientRatePolicies)
+        /// <param name="userRepository"></param>
+        public async static void LoadUsersRateLimits(IUserRepository<string> userRepository, IOptions<ClientRateLimitPolicies> clientRatePolicies)
         {
             var clientRateLimitPolicies = clientRatePolicies.Value;
 
-            var users = await logSystemUnitOfWork.UserRepository.ListAsync();
+            var users = await userRepository.ListAsync();
 
             if (users != null && clientRateLimitPolicies != null)
             {
                 clientRateLimitPolicies.ClientRules = new List<ClientRateLimitPolicy>();
+
                 foreach (var user in users)
-                    clientRateLimitPolicies.ClientRules.Add(CreateUserRateLimitPolicy(user));
+                    clientRateLimitPolicies.ClientRules.Add(CreateUserRateLimitPolicy(user.ID, user.ThrottlingLimit, user.ThrottlingPeriod));
             }
 
         }
         /// <summary>
         /// Create New user Rate Limit Policy Rule
         /// </summary>
-        /// <param name="user">User to create rule for </param>
-        /// <returns></returns>
-        public static ClientRateLimitPolicy CreateUserRateLimitPolicy(User user)
+        public static ClientRateLimitPolicy CreateUserRateLimitPolicy(string UserId, long ThrottlingLimit, string ThrottlingPeriod)
         {
             return new ClientRateLimitPolicy
             {
-                ClientId = user.ID,
+                ClientId = UserId,
                 Rules = new List<RateLimitRule>
                 {
                     new RateLimitRule
                     {
-                        Limit = user.ThrottlingLimit,
-                        Period = user.ThrottlingPeriod,
+                        Limit = ThrottlingLimit,
+                        Period = ThrottlingPeriod,
                         // for [ Post,Put,Get ] 
                         Endpoint = "*"
                     }

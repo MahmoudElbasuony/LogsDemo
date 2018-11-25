@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using LogsDemo.API.Filters;
 using LogsDemo.API.Models;
-using LogsDemo.Domain.Entities;
-using LogsDemo.Domain.Enums;
 using LogsDemo.Domain.Interfaces;
+using LogsDemo.Models.Enums;
 using LogsDemo.SharedKernel.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -119,7 +118,7 @@ namespace LogsDemo.API.Controllers
                     return BadRequest(ModelState);
                 }
 
-                var log = Mapper.Map<Log>(createDto);
+                var log = Mapper.Map<Domain.Entities.LogEntity>(createDto);
 
                 log.UserId = userId;
 

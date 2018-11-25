@@ -1,7 +1,9 @@
 ﻿using LogsDemo.Domain.Entities;
-using LogsDemo.Domain.Enums;
 using LogsDemo.Domain.Interfaces;
 using LogsDemo.Domain.Services;
+using LogsDemo.Domain.Tests.Helpers;
+using LogsDemo.Models;
+using LogsDemo.Models.Enums;
 using LogsDemo.SharedKernel.Linq;
 using Moq;
 using System;
@@ -16,13 +18,11 @@ namespace LogsDemo.Domain.Tests
 {
     public class LogServiceTest
     {
-        private readonly Mock<ILogSystemUnitOfWork> uow;
+        private readonly Mock<ILogRepository<string>> logRepo;
 
-        private readonly Mock<ILogRepository> logRepo;
+        private readonly Mock<IUserRepository<string>> userRepo;
 
-        private readonly Mock<IUserRepository> userRepo;
-
-        private readonly List<Log> logs;
+        private readonly List<Log<string>> logs;
 
         private readonly ILogService logService;
 
@@ -30,64 +30,57 @@ namespace LogsDemo.Domain.Tests
 
         private const string userId = "5be862778d65ca616c3f448b";
 
-        private readonly Func<Log, bool> commonQuery;
+        private readonly Func<Log<string>, bool> commonQuery;
 
-        private readonly Log newlog;
+        private readonly Log<string> newlog;
 
 
         public LogServiceTest()
         {
             // Common Arrangement
 
+            AutoMapperConfig.Setup();
+
             commonQuery = u => u.ID == userId;
 
-            newlog = new Log
+            newlog = new Log<string>
             {
                 ID = logId,
                 UserId = userId,
                 Message = "New Log"
             };
 
-            logs = new List<Log>
+            logs = new List<Log<string>>
             {
                 newlog
             };
 
             // mock user repository
-            userRepo = new Mock<IUserRepository>();
+            userRepo = new Mock<IUserRepository<string>>();
 
             userRepo.Setup(repo => repo.IsExistsAsync(It.IsAny<string>()))
                 .Returns<string>(id => Task.FromResult(userId == id)).Verifiable();
 
 
             // mock log repository
-            logRepo = new Mock<ILogRepository>();
+            logRepo = new Mock<ILogRepository<string>>();
 
-            logRepo.Setup(repo => repo.CreateAsync(It.IsAny<Log>()))
+            logRepo.Setup(repo => repo.CreateAsync(It.IsAny<Log<string>>()))
                 .ReturnsAsync(newlog);
 
-            logRepo.Setup(repo => repo.GetOnAsync(It.IsAny<Expression<Func<Log, bool>>>()))
-                           .Returns<Expression<Func<Log, bool>>>(query => Task.FromResult<IList<Log>>(logs.Where(query.Compile()).ToList()));
+            logRepo.Setup(repo => repo.GetOnAsync(It.IsAny<Expression<Func<Log<string>, bool>>>()))
+                           .Returns<Expression<Func<Log<string>, bool>>>(query => Task.FromResult<IList<Log<string>>>(logs.Where(query.Compile()).ToList()));
 
 
             // mock unit of work 
-            uow = new Mock<ILogSystemUnitOfWork>();
-
-            uow.SetupGet(uow => uow.LogRepository)
-                .Returns(logRepo.Object).Verifiable();
-
-            uow.SetupGet(uow => uow.UserRepository)
-                .Returns(userRepo.Object).Verifiable();
-
-
-            logService = new LogService(uow.Object);
+            logService = new LogService(userRepo.Object, logRepo.Object);
         }
 
         [Fact]
         public async Task Create_Log_Async_Test()
         {
             // Arrange 
-            var xlog = new Log
+            var xlog = new LogEntity
             {
                 ID = "5be8628888888888888f458b",
                 Message = "New Log",
@@ -102,7 +95,7 @@ namespace LogsDemo.Domain.Tests
             Assert.Equal(createdLog.ID, newlog.ID);
 
             userRepo.Verify(repo => repo.IsExistsAsync(It.IsAny<string>()), Times.AtLeastOnce());
-            userRepo.Verify(repo => repo.CreateAsync(It.IsAny<User>()), Times.AtMostOnce());
+            userRepo.Verify(repo => repo.CreateAsync(It.IsAny<User<string>>()), Times.AtMostOnce());
 
         }
 
@@ -152,7 +145,7 @@ namespace LogsDemo.Domain.Tests
             LogSeverity? severity = newlog.Severity;
 
             // Act
-            var existedLogs = await logService.GetUserLogsAsync(userId, start, end,severity, null);
+            var existedLogs = await logService.GetUserLogsAsync(userId, start, end, severity, null);
 
             // Assert
             Assert.NotNull(existedLogs);

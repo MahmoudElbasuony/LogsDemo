@@ -1,4 +1,4 @@
-﻿using LogsDemo.Domain.Enums;
+﻿using LogsDemo.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

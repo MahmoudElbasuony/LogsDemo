@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LogsDemo.Domain.Enums
+namespace LogsDemo.Models.Enums
 {
     public enum LogSeverity
     {

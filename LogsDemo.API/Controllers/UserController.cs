@@ -19,6 +19,8 @@ namespace LogsDemo.API.Controllers
         private readonly IUserService userService;
         private readonly IClientPolicyStore clientPolicyStore;
         private readonly ClientRateLimitOptions clientRateLimitOptions;
+
+
         public UserController(IUserService userService, IClientPolicyStore clientPolicyStore, IOptions<ClientRateLimitOptions> clientRateOptions)
         {
 
@@ -45,7 +47,7 @@ namespace LogsDemo.API.Controllers
                 if (user == null)
                     return NotFound();
 
-                return Ok(Mapper.Map<UserDto>(user));
+                return base.Ok(Mapper.Map<Models.UserDto>(user));
 
             }
             catch (Exception e)
@@ -70,7 +72,7 @@ namespace LogsDemo.API.Controllers
 
             try
             {
-                var user = Mapper.Map<User>(dto);
+                var user = Mapper.Map<UserEntity>(dto);
 
                 user = await userService.CreateUserAsync(user);
 
@@ -78,7 +80,7 @@ namespace LogsDemo.API.Controllers
 
                 // set user rate limit 
 
-                var clientPolicy = RateLimitHelper.CreateUserRateLimitPolicy(user);
+                var clientPolicy = RateLimitHelper.CreateUserRateLimitPolicy(user.ID, user.ThrottlingLimit, user.ThrottlingPeriod);
 
                 if (clientPolicy != null && clientRateLimitOptions != null && clientPolicyStore != null && !clientPolicyStore.Exists(clientPolicy.ClientId))
                 {

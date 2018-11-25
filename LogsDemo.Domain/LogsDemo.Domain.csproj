@@ -5,10 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Helpers\" />
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LogsDemo.Models\LogsDemo.Models.csproj" />
     <ProjectReference Include="..\LogsDemo.SharedKernel\LogsDemo.SharedKernel.csproj" />
   </ItemGroup>
 

@@ -1,5 +1,6 @@
-﻿using LogsDemo.Domain.Entities;
-using LogsDemo.Domain.Enums;
+﻿
+using LogsDemo.Domain.Entities;
+using LogsDemo.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -8,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace LogsDemo.Domain.Interfaces
 {
-    public interface ILogService : IBusinessService<Log>
+    public interface ILogService
     {
-        Task<Log> CreateLogAsync(Log log);
-        Task<Log> GetUserLogAsync(string userId, string logId);
-        Task<IList<Log>> GetUserLogsAsync(string userId, DateTime? from, DateTime? to, LogSeverity? severity, LogType? type);
+        Task<LogEntity> CreateLogAsync(LogEntity log);
+        Task<LogEntity> GetUserLogAsync(string userId, string logId);
+        Task<IList<LogEntity>> GetUserLogsAsync(string userId, DateTime? from, DateTime? to, LogSeverity? severity, LogType? type);
 
     }
 }

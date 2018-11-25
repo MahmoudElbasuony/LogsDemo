@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LogsDemo.Domain.Entities
 {
-    public class User : BaseEntity<string>
+    public class UserEntity : BaseEntity<string>
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "User Name Required")]
         public string Name { get; set; }
