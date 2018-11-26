@@ -66,7 +66,6 @@ namespace LogsDemo.Domain.Tests
                            .ReturnsAsync(users.Where(commonQuery).ToList()).Verifiable();
 
 
-            // mock unit of work 
             userService = new UserService(userRepo.Object);
 
         }

@@ -71,8 +71,6 @@ namespace LogsDemo.Domain.Tests
             logRepo.Setup(repo => repo.GetOnAsync(It.IsAny<Expression<Func<Log<string>, bool>>>()))
                            .Returns<Expression<Func<Log<string>, bool>>>(query => Task.FromResult<IList<Log<string>>>(logs.Where(query.Compile()).ToList()));
 
-
-            // mock unit of work 
             logService = new LogService(userRepo.Object, logRepo.Object);
         }
 
